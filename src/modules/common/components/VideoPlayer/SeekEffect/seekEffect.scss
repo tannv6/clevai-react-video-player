@@ -1,0 +1,58 @@
+.seek-effect-container {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: #00000070;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  animation: just-show 1s linear forwards;
+  .seek-effect-wrapper {
+    width: 100%;
+    display: flex;
+    gap: 4px;
+    justify-content: center;
+    &-backward {
+      transform: rotate(180deg);
+    }
+    .seek-triangle {
+      border-color: transparent transparent transparent white;
+      border-style: solid;
+      border-width: 10px 0 10px 15px;
+      opacity: 0.2;
+      animation: opacity-show 1s linear forwards;
+      &:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      &:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+    }
+  }
+  .seeked-time {
+    color: white;
+  }
+  @keyframes opacity-show {
+    0% {
+      opacity: 0.2;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0.2;
+    }
+  }
+  @keyframes just-show {
+    0% {
+      visibility: hidden;
+    }
+    1% {
+      visibility: visible;
+    }
+    100% {
+      visibility: hidden;
+    }
+  }
+}
