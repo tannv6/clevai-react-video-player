@@ -1,0 +1,303 @@
+.controls {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  transform: translateY(100%);
+  transition: 0.3s ease-in-out;
+  padding: 30px 10px 10px;
+  background: linear-gradient(to bottom, #00000000, #000000);
+  &-show {
+    transform: translateY(0);
+  }
+  .main-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 4px 0;
+    .main-controls_left {
+      display: flex;
+      align-items: center;
+      .btn-play-pause {
+        height: 32px;
+        width: 24px;
+        background: none;
+        outline: none;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        margin: 0 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 32px;
+        .play-icon {
+          border-style: solid;
+          border-width: 0.5em 0px 0.5em 0.75em;
+          border-color: transparent transparent transparent white;
+        }
+        .pause-icon {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          justify-content: space-between;
+          * {
+            width: 0.25em;
+            height: 100%;
+            background-color: white;
+            border-radius: 4px;
+          }
+        }
+      }
+      .clock {
+        color: white;
+        font-size: 20px;
+        margin-left: 20px;
+        display: inline-flex;
+      }
+      .btn-rewind {
+        height: 20px;
+        background: none;
+        outline: none;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        margin: 0 10px;
+        font-size: 20px;
+        .icon-rewind {
+          height: 100%;
+          display: inline-flex;
+          * {
+            display: inline-block;
+            border-color: transparent white transparent transparent;
+            border-style: solid;
+            border-width: 0.5em 0.75em 0.5em 0;
+          }
+        }
+      }
+      .btn-fast-forward {
+        height: 20px;
+        background: none;
+        outline: none;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        margin: 0 10px;
+        font-size: 20px;
+        .icon-rewind {
+          height: 100%;
+          display: inline-flex;
+          * {
+            display: inline-block;
+            border-color: transparent transparent transparent white;
+            border-style: solid;
+            border-width: 0.5em 0 0.5em 0.75em;
+          }
+        }
+      }
+      .btn-volume {
+        height: 32px;
+        background: none;
+        outline: none;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        margin: 0 10px;
+        position: relative;
+        z-index: 5;
+        display: inline-flex;
+        -webkit-tap-highlight-color: transparent;
+        display: flex;
+        align-items: center;
+        img {
+          height: 100%;
+        }
+        .input-volume {
+          height: 7px;
+          padding: 0;
+          margin: 0;
+          cursor: pointer;
+          border-radius: 5px;
+          -webkit-appearance: none;
+          transition: 0.3s ease-out;
+          width: 0px;
+          z-index: 1;
+          box-shadow: inset 0 0 3px 1px #7b7b7b;
+          margin-left: 4px;
+          -webkit-tap-highlight-color: transparent;
+          &::-webkit-slider-thumb {
+            background-color: white;
+            -webkit-appearance: none;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+          }
+          &:hover {
+            &::-webkit-slider-thumb {
+              width: 12px;
+              height: 12px;
+            }
+          }
+        }
+        &:hover {
+          .input-volume {
+            width: 70px;
+          }
+        }
+      }
+    }
+    .main-controls_right {
+      display: flex;
+      align-items: center;
+      .btn-setting {
+        height: 32px;
+        background: none;
+        outline: none;
+        border: none;
+        cursor: pointer;
+        padding: 0 15px;
+        -webkit-tap-highlight-color: transparent;
+        transition: 0.3s ease-out;
+        img {
+          height: 100%;
+        }
+        &:hover {
+          transform: rotate(35deg);
+        }
+      }
+      .btn-pip {
+        height: 32px;
+        background: none;
+        outline: none;
+        border: none;
+        cursor: pointer;
+        padding: 0 15px;
+        -webkit-tap-highlight-color: transparent;
+        img {
+          height: 100%;
+        }
+      }
+      .btn-full-screen {
+        height: 24px;
+        background: none;
+        outline: none;
+        border: none;
+        cursor: pointer;
+        padding: 0 15px;
+        -webkit-tap-highlight-color: transparent;
+        img {
+          height: 100%;
+        }
+      }
+    }
+  }
+
+  .player-progress {
+    margin-bottom: 10px;
+    height: 24px;
+    position: relative;
+    display: flex;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    #slider-title {
+      position: absolute;
+      cursor: default;
+      bottom: 100%;
+      left: 0;
+      color: white;
+      transform: translateX(-50%);
+      display: none;
+      &.slider-title-show {
+        display: inline-block;
+      }
+    }
+    .progress-bar {
+      height: 3px;
+      width: 100%;
+      transition: 0.2s linear;
+      transform: scaleY(1);
+      margin: auto 0;
+    }
+    .circle-range-point {
+      display: inline-block;
+      width: 0px;
+      height: 0px;
+      background-color: #1877f2;
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      transition: width 0.2s linear, height 0.2s linear;
+    }
+    &-hover {
+      // #slider-title {
+      //   display: inline-block;
+      // }
+      .progress-bar {
+        transform: scaleY(1.4);
+      }
+      .circle-range-point {
+        width: 12px;
+        height: 12px;
+      }
+    }
+  }
+}
+.video-wrapper-is-mobile {
+  .controls {
+    padding: 10px 5px 5px;
+    .main-controls {
+      .main-controls_left {
+        .clock {
+          font-size: 14px;
+          margin-left: 7px;
+        }
+        button {
+          &.btn-play-pause {
+            height: 20px;
+            width: 16px;
+            font-size: 20px;
+            margin: 0 7px;
+            display: none;
+          }
+          &.btn-rewind {
+            height: 14px;
+            font-size: 14px;
+            margin: 0 7px 0 0;
+          }
+          &.btn-fast-forward {
+            height: 14px;
+            font-size: 14px;
+            margin: 0 7px;
+          }
+          &.btn-volume {
+            height: 20px;
+            margin: 0 7px;
+            &:hover {
+              .input-volume {
+                width: 50px;
+              }
+            }
+          }
+        }
+      }
+      .main-controls_right {
+        .btn-setting {
+          height: 22px;
+          padding: 0 7px;
+        }
+        .btn-pip {
+          height: 22px;
+          padding: 0 7px;
+        }
+        .btn-full-screen {
+          height: 16px;
+          padding: 0 0 0 7px;
+        }
+      }
+    }
+    .player-progress {
+      margin-bottom: 5px;
+    }
+  }
+}

@@ -8,3 +8,4 @@ export const IconEXitPip =
   require("./picture-in-picture-exit-icon.svg").default;
 export const IconVolume = require("./volume-icon.svg").default;
 export const IconMute = require("./volume-mute-icon.svg").default;
+export const IconSetting = require("./settings-icon.svg").default;

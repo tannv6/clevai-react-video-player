@@ -8,6 +8,7 @@
   justify-content: center;
   flex-direction: column;
   animation: just-show 1s linear forwards;
+  font-size: 20px;
   .seek-effect-wrapper {
     width: 100%;
     display: flex;
@@ -19,7 +20,7 @@
     .seek-triangle {
       border-color: transparent transparent transparent white;
       border-style: solid;
-      border-width: 10px 0 10px 15px;
+      border-width: 0.5em 0 0.5em 0.75em;
       opacity: 0.2;
       animation: opacity-show 1s linear forwards;
       &:nth-child(2) {
@@ -54,5 +55,12 @@
     100% {
       visibility: hidden;
     }
+  }
+}
+.video-wrapper-is-mobile {
+  .seek-effect-container {
+    width: 50px;
+    height: 50px;
+    font-size: 10px;
   }
 }

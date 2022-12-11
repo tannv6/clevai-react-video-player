@@ -69,6 +69,11 @@
     }
   }
 }
+.video-wrapper-is-mobile {
+  .spinner-loading {
+    zoom: 0.7;
+  }
+}
 @keyframes lds-spinner {
   0% {
     opacity: 1;

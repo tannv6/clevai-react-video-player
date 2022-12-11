@@ -1,8 +1,7 @@
 import { memo, useEffect, useRef, useState } from "react";
-import { IconPause, IconPlay } from "../../../assets/icons";
 import "./playEffect.scss";
 type Props = {
-  isPlay: boolean;
+  isPlay?: boolean;
 };
 function PlayEffect({ isPlay }: Props) {
   const [showPlay, setShowPlay] = useState(false);
@@ -19,7 +18,7 @@ function PlayEffect({ isPlay }: Props) {
       timerPlayRef.current = setTimeout(() => {
         setShowPlay(false);
       }, 400);
-    } else {
+    } else if (isPlay !== null) {
       setShowPause(true);
       if (timerPauseRef.current) {
         clearTimeout(timerPauseRef.current);
@@ -34,12 +33,15 @@ function PlayEffect({ isPlay }: Props) {
     <div className="play-effect-container">
       {showPlay && (
         <div className="play-effect-wrapper">
-          <img src={IconPlay} alt="" />{" "}
+          <div className="play-icon"></div>
         </div>
       )}
       {showPause && (
         <div className="play-effect-wrapper">
-          <img src={IconPause} alt="" />{" "}
+          <div className="pause-icon">
+            <div></div>
+            <div></div>
+          </div>
         </div>
       )}
     </div>
