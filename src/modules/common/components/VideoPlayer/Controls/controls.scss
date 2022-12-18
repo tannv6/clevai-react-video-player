@@ -3,12 +3,14 @@
   bottom: 0;
   left: 0;
   right: 0;
-  transform: translateY(100%);
+  visibility: hidden;
+  opacity: 0;
   transition: 0.3s ease-in-out;
   padding: 10px 5px;
   background: linear-gradient(to bottom, #00000000, #00000090);
   &-show {
-    transform: translateY(0);
+    visibility: visible;
+    opacity: 1;
   }
   .main-controls {
     display: flex;
