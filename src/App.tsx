@@ -28,12 +28,9 @@ function App() {
           autoPlay
           ref={videoRef}
           title={
-            "Hi friend! Before you go, just wanted to let you know that in Jan 2023 I will be launching the Hi friend! Before you go, just wanted to let you know that in Jan 2023 I will be launching the"
+            "Hi friend! Before you go, just wanted to let you know that in Jan 2023 I will be launching the Web"
           }
         />
-        {/* <video style={{ width: "100%" }} controls>
-          <source src={videos[video]} />
-        </video> */}
       </div>
     </div>
   );

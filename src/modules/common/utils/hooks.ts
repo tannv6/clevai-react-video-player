@@ -139,7 +139,6 @@ export const useInitEffect = ({ ref, muted }: any) => {
   };
 
   const handleMouseMove = (e: any) => {
-    e.preventDefault();
     if (!(e.target.id || "")?.includes("progress")) {
       if (!controlsShow) {
         setControlsShow(true);
