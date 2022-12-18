@@ -158,14 +158,15 @@ export const useInitEffect = ({ ref, muted }: any) => {
 
   const handleSeek = (type: "FORWARD" | "BACKWARD") => {
     holdControlsShow();
+    const total = videoRef.current?.duration;
     if (type === "FORWARD") {
       if (
-        videoRef.current?.currentTime ||
-        videoRef.current?.currentTime === 0
+        (videoRef.current?.currentTime ||
+          videoRef.current?.currentTime === 0) &&
+        videoRef.current?.currentTime < total
       ) {
         videoRef.current.currentTime = videoRef.current?.currentTime! + 10;
         setTimeClock(videoRef.current.currentTime || 0);
-        const total = videoRef.current?.duration;
         setRange((range) => range + (10 / total) * 100);
         setSeekEffect({
           show: true,
@@ -177,7 +178,6 @@ export const useInitEffect = ({ ref, muted }: any) => {
       if (videoRef.current?.currentTime) {
         videoRef.current.currentTime = videoRef.current?.currentTime! - 10;
         setTimeClock(videoRef.current.currentTime || 0);
-        const total = videoRef.current?.duration;
         setRange((range) => range - (10 / total) * 100);
         setSeekEffect({
           show: true,

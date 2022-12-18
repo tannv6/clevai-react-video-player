@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/no-redundant-roles */
-import { useState, memo } from "react";
+import { useState, memo, useEffect } from "react";
 import { useInitEffect } from "../../utils/hooks";
 import Controls from "./Controls";
 import PlayButton from "./PlayButton";
@@ -14,7 +14,7 @@ import "./videoPlayer.scss";
 import VideoTitle from "./VideoTitle";
 type RenderProps = {
   url: string;
-  ref?: any;
+  customRef?: any;
   autoPlay?: boolean;
   volume?: any;
   setVolume?: any;
@@ -23,22 +23,26 @@ type RenderProps = {
 };
 type Props = {
   url: string;
-  ref?: any;
+  customRef?: any;
   autoPlay?: boolean;
   setVolume?: any;
   muted?: boolean;
   title?: string;
 };
-function VideoPlayer({ url, autoPlay, ref, muted, title }: Props) {
+function VideoPlayer({ url, autoPlay, customRef, muted, title }: Props) {
   const [volume, setVolume] = useState(muted ? 0 : 100);
+  const [key, setKey] = useState(url);
+  useEffect(() => {
+    setKey(url);
+  }, [url]);
   return (
     <Render
       url={url}
       autoPlay={autoPlay}
-      key={url}
+      key={key}
       volume={volume}
       setVolume={setVolume}
-      ref={ref}
+      customRef={customRef}
       muted={muted}
       title={title}
     />
@@ -52,7 +56,7 @@ const Render = ({
   autoPlay,
   volume,
   setVolume,
-  ref,
+  customRef,
   muted,
   title,
 }: RenderProps) => {
@@ -98,7 +102,7 @@ const Render = ({
     device,
     setDevice,
     setTimeClock,
-  ] = useInitEffect({ ref, muted });
+  ] = useInitEffect({ ref: customRef, muted });
   return (
     <div className="video-player-container" ref={containerRef}>
       <div

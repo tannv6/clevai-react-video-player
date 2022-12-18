@@ -320,9 +320,9 @@ function Controls({
                   <path
                     d="M9.99998 17.5V8.5M16 17.5V8.5M13 25C6.37256 25 1 19.6274 1 13C1 6.37259 6.37256 1 13 1C19.6274 1 25 6.37259 25 13C25 19.6274 19.6274 25 13 25Z"
                     stroke="white"
-                    stroke-width="2.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   />
                 ) : (
                   <path

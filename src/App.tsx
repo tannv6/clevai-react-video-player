@@ -26,7 +26,7 @@ function App() {
         <VideoPlayer
           url={videos[video]}
           autoPlay
-          ref={videoRef}
+          customRef={videoRef}
           title={
             "Hi friend! Before you go, just wanted to let you know that in Jan 2023 I will be launching the Web"
           }
