@@ -119,6 +119,9 @@
     .main-controls_right {
       display: flex;
       align-items: center;
+      img {
+        display: block;
+      }
       .btn-setting {
         background: none;
         outline: none;

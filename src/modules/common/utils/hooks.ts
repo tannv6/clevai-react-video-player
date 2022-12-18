@@ -222,14 +222,15 @@ export const useInitEffect = ({ ref, muted }: any) => {
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.code === "ArrowRight") {
+        e.preventDefault();
         setControlsShow(true);
         handleSeek("FORWARD");
-        e.preventDefault();
       } else if (e.code === "ArrowLeft") {
+        e.preventDefault();
         setControlsShow(true);
         handleSeek("BACKWARD");
-        e.preventDefault();
       } else if (e.code === "Space") {
+        e.preventDefault();
         setControlsShow(true);
         handlePlayVideo();
       }

@@ -14,7 +14,7 @@
   align-items: center;
   justify-content: center;
   transform-origin: "center";
-  animation: play-effect 0.8s linear;
+  animation: play-effect 0.8s ease-out;
   background-color: #0000006e;
   border-radius: 50%;
   .play-icon {
@@ -42,7 +42,7 @@
       visibility: visible;
     }
     80% {
-      transform: scale(3);
+      transform: scale(2);
       opacity: 0;
       visibility: hidden;
     }
