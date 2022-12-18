@@ -14,13 +14,14 @@
   align-items: center;
   justify-content: center;
   transform-origin: "center";
-  animation: play-effect 0.5s linear;
+  animation: play-effect 0.8s linear;
   background-color: #0000006e;
   border-radius: 50%;
   .play-icon {
     border-style: solid;
     border-width: 10px 0px 10px 17px;
     border-color: transparent transparent transparent white;
+    transform: translateX(2px);
   }
   .pause-icon {
     width: 20px;

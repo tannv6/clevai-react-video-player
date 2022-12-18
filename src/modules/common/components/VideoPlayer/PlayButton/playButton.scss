@@ -11,9 +11,11 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: radial-gradient(closest-side, #3333335c, #3333333c, #3333331c);
-  box-shadow: 0 0 50px 1px #3333334a;
+  background: radial-gradient(closest-side, #3333332c, #3333332c, #3333331c);
+  box-shadow: 0 0 100px 1px #3333334a;
   z-index: 1;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
   .pause-button {
     width: 20px;
     height: 20px;

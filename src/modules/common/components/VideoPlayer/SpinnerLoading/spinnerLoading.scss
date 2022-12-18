@@ -4,6 +4,8 @@
   position: relative;
   width: 80px;
   height: 80px;
+  animation: delay-appear 2s linear;
+  visibility: hidden;
   div {
     transform-origin: 40px 40px;
     animation: lds-spinner 1.2s linear infinite;
@@ -80,5 +82,19 @@
   }
   100% {
     opacity: 0;
+  }
+}
+@keyframes delay-appear {
+  0% {
+    visibility: hidden;
+    opacity: 0;
+  }
+  50% {
+    visibility: hidden;
+    opacity: 0;
+  }
+  100% {
+    visibility: visible;
+    opacity: 1;
   }
 }

@@ -10,3 +10,11 @@ export const formatTime = (time: number) => {
     ? minutesDisplay + ":" + secondDisplay
     : hoursDisplay + ":" + minutesDisplay + ":" + secondDisplay;
 };
+
+export const isTouchDevice = () => {
+  return (
+    "ontouchstart" in window ||
+    navigator.maxTouchPoints > 0 ||
+    (navigator as any).msMaxTouchPoints > 0
+  );
+};

@@ -1,0 +1,107 @@
+.setting-wrapper {
+  position: absolute;
+  right: 20px;
+  border-radius: 4px;
+  width: 150px;
+  height: auto;
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 5px 0;
+  box-sizing: border-box;
+  background-color: #333333d6;
+  color: #fff;
+  overflow: hidden;
+  transition: height 0.1s ease-in;
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
+  &-hide {
+    display: none;
+  }
+  .tabs {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    transition: 0.1s ease-in;
+    .st-opt {
+      padding: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      .st-otp__title {
+      }
+      .st-otp__current-value {
+        display: flex;
+        align-items: center;
+        .st-otp__current-value__arrow {
+          border-style: solid;
+          border-width: 5px 0px 5px 5px;
+          border-color: transparent transparent transparent white;
+          display: inline-block;
+          margin-left: 5px;
+        }
+      }
+      &:hover {
+        background-color: #b1b1b133;
+      }
+    }
+  }
+  .speed-setting {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    transition: 0.1s ease-in;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 0 0 5px 0;
+    box-sizing: border-box;
+    .title {
+      padding: 5px;
+      cursor: default;
+      border-bottom: 1px solid #5b5a5a;
+      .title__btn-back {
+        padding: 5px 20px 5px 10px;
+        background: none;
+        outline: none;
+        border: none;
+        cursor: pointer;
+        .title__btn-back__arrow {
+          border-style: solid;
+          border-width: 5px 5px 5px 0px;
+          border-color: transparent white transparent transparent;
+          display: inline-block;
+        }
+      }
+      .title__text {
+        cursor: pointer;
+      }
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      flex: 1;
+      overflow: auto;
+      &::-webkit-scrollbar {
+        width: 5px;
+      }
+      &::-webkit-scrollbar-thumb {
+        background-color: #b1b1b1ae;
+        width: 5px;
+        // border-radius: 3px;
+      }
+      li {
+        cursor: pointer;
+        padding: 10px 20px;
+        &:hover {
+          background-color: #b1b1b133;
+        }
+        .icon-check {
+          width: 14px;
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+}
