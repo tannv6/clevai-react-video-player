@@ -309,14 +309,6 @@ function Controls({
               className="btn-play-pause"
               id="btn-play-pause"
             >
-              {/* <div
-                className={`play-icon ${
-                  !videoRef.current?.paused ? "play-icon-paused" : ""
-                }`}
-              >
-                <div></div>
-                <div></div>
-              </div> */}
               <svg
                 width="26"
                 height="26"
