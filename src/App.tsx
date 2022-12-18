@@ -2,9 +2,9 @@ import { useRef, useState } from "react";
 import VideoPlayer from "./modules/common/components/VideoPlayer";
 import Select from "react-select";
 const Video =
-  "https://mdn.github.io/dom-examples/picture-in-picture/assets/bigbuckbunny.mp4";
+  "http://192.168.0.185:5555/Alan Walker Best Songs Of All Time - Alan Walker Full Album 2022.mp4";
 const Video1 =
-  "https://mdn.github.io/learning-area/html/multimedia-and-embedding/video-and-audio-content/rabbit320.mp4";
+  "http://192.168.0.185:5555/Đi Về Nhà, Năm Qua Đã Làm Gì - LK Nhạc Xuân 2023 - Nhạc Tết 2023 Nghe Là Nghiện.mp4";
 const videos = [Video, Video1];
 function App() {
   const [video, setVideo] = useState<any>(0);
