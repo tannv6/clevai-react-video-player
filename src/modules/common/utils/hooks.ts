@@ -1,18 +1,17 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { MOBILE_WIDTH } from "./constants";
 import { useEffect, useState, useRef } from "react";
 import { isTouchDevice } from "./functions";
-export const useInitEffect = ({ ref, muted }: any) => {
+export const useInitEffect = (ref: any) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const wrapperRef = useRef<HTMLDivElement | null>(null);
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const videoRef = ref ? ref : useRef<HTMLVideoElement>(null);
+  const videoRef = ref || useRef<HTMLVideoElement>(null);
   const timerShowControls = useRef<any>(null);
   const timeStart = useRef(0);
   const [controlsShow, setControlsShow] = useState(false);
   const [range, setRange] = useState(0);
   const [isFullScreen, setIsFullScreen] = useState(false);
-  const [mute, setMute] = useState(muted);
   const [isPip, setIsPip] = useState(false);
   const [loading, setLoading] = useState(true);
   const [isPlay, setIsPlay] = useState<any>(null);
@@ -22,14 +21,17 @@ export const useInitEffect = ({ ref, muted }: any) => {
   const [isEnded, setIsEnded] = useState(false);
   const [showSetting, setShowSetting] = useState(false);
   const [timeClock, setTimeClock] = useState(0);
+  const [isEffectPlay, setIsEffectPlay] = useState(false);
+  const timerClickPlay = useRef<any>({});
   const [device, setDevice] = useState<"TOUCH" | "NO_TOUCH">(
     isTouchDevice() ? "TOUCH" : "NO_TOUCH"
   );
   const timerClickRef = useRef<any>(null);
   const [showEffect, setShowEffect] = useState(false);
   const timerShowPlayEffectRef = useRef<any>(null);
-  const playEffect = () => {
+  const playEffect = (isPlay: boolean) => {
     setShowEffect(true);
+    setIsEffectPlay(isPlay);
     clearTimeout(timerShowPlayEffectRef.current);
     timerShowPlayEffectRef.current = setTimeout(() => {
       setShowEffect(false);
@@ -62,10 +64,10 @@ export const useInitEffect = ({ ref, muted }: any) => {
     holdControlsShow();
     if (videoRef.current?.paused || videoRef.current?.ended) {
       videoRef.current?.play();
-      playEffect();
+      playEffect(true);
     } else {
       videoRef.current?.pause();
-      playEffect();
+      playEffect(false);
     }
   };
 
@@ -87,11 +89,39 @@ export const useInitEffect = ({ ref, muted }: any) => {
     } else {
       if (controlsShow && !shouldIsMobile) {
         if (videoRef.current?.paused || videoRef.current?.ended) {
-          videoRef.current?.play();
-          playEffect();
+          if (
+            timerClickPlay.current?.time &&
+            timerClickPlay.current.time - Date.now() < 250
+          ) {
+            clearTimeout(timerClickPlay.current.timer);
+            timerClickPlay.current["time"] = null;
+          } else {
+            if (timerClickPlay.current) {
+              timerClickPlay.current.time = Date.now();
+              timerClickPlay.current.timer = setTimeout(() => {
+                timerClickPlay.current["time"] = null;
+                videoRef.current?.play();
+              }, 250);
+            }
+          }
+          playEffect(true);
         } else {
-          videoRef.current?.pause();
-          playEffect();
+          if (
+            timerClickPlay.current?.time &&
+            timerClickPlay.current.time - Date.now() < 250
+          ) {
+            clearTimeout(timerClickPlay.current.timer);
+            timerClickPlay.current.time = null;
+          } else {
+            if (timerClickPlay.current) {
+              timerClickPlay.current.time = Date.now();
+              timerClickPlay.current.timer = setTimeout(() => {
+                timerClickPlay.current.time = null;
+                videoRef.current?.pause();
+              }, 250);
+            }
+          }
+          playEffect(false);
         }
       } else {
         if (e.detail === 1) {
@@ -327,8 +357,6 @@ export const useInitEffect = ({ ref, muted }: any) => {
   return [
     range,
     isFullScreen,
-    mute,
-    setMute,
     isPip,
     loading,
     setLoading,
@@ -366,5 +394,6 @@ export const useInitEffect = ({ ref, muted }: any) => {
     device,
     setDevice,
     setTimeClock,
+    isEffectPlay,
   ];
 };

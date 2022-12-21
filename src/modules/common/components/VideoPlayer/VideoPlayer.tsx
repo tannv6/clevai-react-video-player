@@ -3,23 +3,19 @@
 import { useState, memo, useEffect } from "react";
 import { useInitEffect } from "../../utils/hooks";
 import Controls from "./Controls";
-import PlayButton from "./PlayButton";
-
-import PlayEffect from "./PlayEffect";
-import ReplayButton from "./ReplayButton";
-import SeekEffect from "./SeekEffect";
 import Setting from "./Setting";
-import SpinnerLoading from "./SpinnerLoading";
+import Video from "./Video";
+import VideoEffect from "./VideoEffect";
 import "./videoPlayer.scss";
-import VideoTitle from "./VideoTitle";
 type RenderProps = {
   url: string;
   customRef?: any;
   autoPlay?: boolean;
   volume?: any;
   setVolume?: any;
-  muted?: boolean;
+  mute?: boolean;
   title?: string;
+  setMute?: any;
 };
 type Props = {
   url: string;
@@ -31,6 +27,7 @@ type Props = {
 };
 function VideoPlayer({ url, autoPlay, customRef, muted, title }: Props) {
   const [volume, setVolume] = useState(muted ? 0 : 100);
+  const [mute, setMute] = useState(muted);
   const [key, setKey] = useState(url);
   useEffect(() => {
     setKey(url);
@@ -43,8 +40,9 @@ function VideoPlayer({ url, autoPlay, customRef, muted, title }: Props) {
       volume={volume}
       setVolume={setVolume}
       customRef={customRef}
-      muted={muted}
+      mute={mute}
       title={title}
+      setMute={setMute}
     />
   );
 }
@@ -57,14 +55,13 @@ const Render = ({
   volume,
   setVolume,
   customRef,
-  muted,
+  mute,
   title,
+  setMute,
 }: RenderProps) => {
   const [
     range,
     isFullScreen,
-    mute,
-    setMute,
     isPip,
     loading,
     setLoading,
@@ -102,7 +99,9 @@ const Render = ({
     device,
     setDevice,
     setTimeClock,
-  ] = useInitEffect({ ref: customRef, muted });
+    isEffectPlay,
+  ] = useInitEffect(customRef);
+
   return (
     <div className="video-player-container" ref={containerRef}>
       <div
@@ -115,78 +114,39 @@ const Render = ({
       >
         {!isError && (
           <>
-            <VideoTitle
-              title={title || ""}
-              controlsShow={controlsShow}
-              isFullScreen={isFullScreen}
-              handleFullScreen={handleFullScreen}
+            <VideoEffect
+              {...{
+                title,
+                controlsShow,
+                isFullScreen,
+                handleFullScreen,
+                loading,
+                isPlay,
+                shouldIsMobile,
+                loaded,
+                isEffectPlay,
+                handlePlayVideo,
+                isEnded,
+                showEffect,
+                seekEffect,
+                handleReplayVideo,
+              }}
             />
-            {((loading && isPlay) || !loaded) && (
-              <SpinnerLoading className="video-player-loading" />
-            )}
-            {shouldIsMobile && loaded && (controlsShow || !isPlay) ? (
-              <PlayButton isPlay={isPlay} onClick={handlePlayVideo} />
-            ) : !shouldIsMobile && loaded && !isEnded && showEffect ? (
-              <PlayEffect isPlay={!videoRef.current?.paused} />
-            ) : (
-              <></>
-            )}
-            {!shouldIsMobile && (
-              <ReplayButton isEnded={isEnded} onReplay={handleReplayVideo} />
-            )}
-            {seekEffect.show && seekEffect.type === "FORWARD" && (
-              <SeekEffect
-                time={10}
-                timeUnit={"SECOND"}
-                className="seek-forward"
-                type="FORWARD"
-                key={seekEffect.key}
-              />
-            )}
-            {seekEffect.show && seekEffect.type === "BACKWARD" && (
-              <SeekEffect
-                time={10}
-                timeUnit={"SECOND"}
-                className="seek-backward"
-                type="BACKWARD"
-                key={seekEffect.key}
-              />
-            )}
-            <video
-              ref={videoRef}
-              onDoubleClick={handleDoubleClick}
-              onClick={handleClickVideo}
-              onContextMenu={(e) => e.preventDefault()}
-              muted={mute}
-              onLoadStart={() => {
-                setLoading(true);
+            <Video
+              {...{
+                videoRef,
+                handleDoubleClick,
+                handleClickVideo,
+                mute,
+                setLoading,
+                setIsError,
+                autoPlay,
+                setIsPlay,
+                setLoaded,
+                setIsEnded,
+                url,
               }}
-              onCanPlay={() => {
-                setLoading(false);
-                setIsError(false);
-              }}
-              autoPlay={autoPlay}
-              onWaiting={() => {
-                setLoading(true);
-              }}
-              onPlay={() => {
-                setIsPlay(true);
-              }}
-              onPause={() => {
-                setIsPlay(false);
-              }}
-              onError={() => {
-                setIsError(true);
-              }}
-              onLoadedMetadata={() => {
-                setLoaded(true);
-              }}
-              onEnded={() => {
-                setIsEnded(true);
-              }}
-            >
-              <source src={url} type="video/mp4" />
-            </video>
+            />
             <Controls
               {...{
                 controlsShow,

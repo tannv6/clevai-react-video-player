@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import VideoPlayer from "./modules/common/components/VideoPlayer";
 import Select from "react-select";
 const Video =
@@ -8,7 +8,6 @@ const Video1 =
 const videos = [Video, Video1];
 function App() {
   const [video, setVideo] = useState<any>(0);
-  const videoRef = useRef<any>(null);
   return (
     <div className="App">
       <div className="heading">
@@ -26,7 +25,6 @@ function App() {
         <VideoPlayer
           url={videos[video]}
           autoPlay
-          customRef={videoRef}
           title={
             "Hi friend! Before you go, just wanted to let you know that in Jan 2023 I will be launching the Web"
           }
