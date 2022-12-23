@@ -12,7 +12,7 @@ function VideoEffect({
   handleFullScreen,
   loading,
   isPlay,
-  shouldIsMobile,
+  isTouchAble,
   loaded,
   isEffectPlay,
   handlePlayVideo,
@@ -32,14 +32,14 @@ function VideoEffect({
       {((loading && isPlay) || !loaded) && (
         <SpinnerLoading className="video-player-loading" />
       )}
-      {shouldIsMobile && loaded && (controlsShow || !isPlay) ? (
+      {isTouchAble && loaded && (controlsShow || !isPlay) ? (
         <PlayButton isPlay={isPlay} onClick={handlePlayVideo} />
-      ) : !shouldIsMobile && loaded && !isEnded && showEffect ? (
+      ) : !isTouchAble && loaded && !isEnded && showEffect ? (
         <PlayEffect isPlay={isEffectPlay} />
       ) : (
         <></>
       )}
-      {!shouldIsMobile && (
+      {!isTouchAble && (
         <ReplayButton isEnded={isEnded} onReplay={handleReplayVideo} />
       )}
       {seekEffect.show && seekEffect.type === "FORWARD" && (

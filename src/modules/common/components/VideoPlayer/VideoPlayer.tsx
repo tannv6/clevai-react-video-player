@@ -82,7 +82,7 @@ const Render = ({
     showEffect,
     seekEffect,
     containerRef,
-    shouldIsMobile,
+    isTouchAble,
     wrapperRef,
     controlsShow,
     handleFullScreen,
@@ -100,14 +100,15 @@ const Render = ({
     setDevice,
     setTimeClock,
     isEffectPlay,
+    isMobile,
   ] = useInitEffect(customRef);
 
   return (
     <div className="video-player-container" ref={containerRef}>
       <div
         className={`video-wrapper ${
-          shouldIsMobile ? "video-wrapper-is-mobile" : ""
-        }`}
+          isTouchAble ? "video-wrapper-is-mobile" : ""
+        } ${isMobile && !isTouchAble ? "video-wrapper-need-zoom" : ""}`}
         ref={wrapperRef}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
@@ -122,7 +123,7 @@ const Render = ({
                 handleFullScreen,
                 loading,
                 isPlay,
-                shouldIsMobile,
+                isTouchAble,
                 loaded,
                 isEffectPlay,
                 handlePlayVideo,
@@ -178,7 +179,7 @@ const Render = ({
               videoRef={videoRef}
               showSetting={showSetting}
               setShowSetting={setShowSetting}
-              isMobile={shouldIsMobile}
+              isMobile={isTouchAble}
             />
           </>
         )}

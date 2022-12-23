@@ -48,8 +48,6 @@ export const useInitEffect = (ref: any) => {
   });
 
   const isTouchAble = device === "TOUCH";
-  const shouldIsMobile = isTouchAble || isMobile;
-  // const mustIsMobile = isTouchAble && isMobile;
 
   useEffect(() => {
     if (controlsShow) {
@@ -87,7 +85,7 @@ export const useInitEffect = (ref: any) => {
     if (showSetting) {
       setShowSetting(false);
     } else {
-      if (controlsShow && !shouldIsMobile) {
+      if (controlsShow && !isTouchAble) {
         if (videoRef.current?.paused || videoRef.current?.ended) {
           if (
             timerClickPlay.current?.time &&
@@ -126,10 +124,10 @@ export const useInitEffect = (ref: any) => {
       } else {
         if (e.detail === 1) {
           timerClickRef.current = setTimeout(() => {
-            if (controlsShow && shouldIsMobile) {
+            if (controlsShow && isTouchAble) {
               clearTimeout(timerShowControls.current);
               setControlsShow(false);
-            } else if (!controlsShow && shouldIsMobile) {
+            } else if (!controlsShow && isTouchAble) {
               setControlsShow(true);
             }
           }, 250);
@@ -341,7 +339,7 @@ export const useInitEffect = (ref: any) => {
   };
 
   const handleDoubleClick = (e: any) => {
-    if (!shouldIsMobile) {
+    if (!isTouchAble) {
       handleFullScreen();
     } else {
       const videoOffsetX =
@@ -377,7 +375,7 @@ export const useInitEffect = (ref: any) => {
     showEffect,
     seekEffect,
     containerRef,
-    shouldIsMobile,
+    isTouchAble,
     wrapperRef,
     controlsShow,
     handleFullScreen,
@@ -395,5 +393,6 @@ export const useInitEffect = (ref: any) => {
     setDevice,
     setTimeClock,
     isEffectPlay,
+    isMobile,
   ];
 };
