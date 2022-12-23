@@ -100,7 +100,7 @@ const Render = ({
     setDevice,
     setTimeClock,
     isEffectPlay,
-    isMobile,
+    containerWidth,
   ] = useInitEffect(customRef);
 
   return (
@@ -108,7 +108,16 @@ const Render = ({
       <div
         className={`video-wrapper ${
           isTouchAble ? "video-wrapper-is-mobile" : ""
-        } ${isMobile && !isTouchAble ? "video-wrapper-need-zoom" : ""}`}
+        } ${
+          containerWidth < 400 && !isTouchAble
+            ? "video-wrapper-need-zoom-2"
+            : ""
+        } ${
+          (containerWidth < 500 && !isTouchAble) ||
+          (containerWidth < 340 && isTouchAble)
+            ? "video-wrapper-need-zoom-1"
+            : ""
+        }`}
         ref={wrapperRef}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}

@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { MOBILE_WIDTH } from "./constants";
 import { useEffect, useState, useRef } from "react";
 import { isTouchDevice } from "./functions";
 export const useInitEffect = (ref: any) => {
@@ -15,7 +14,7 @@ export const useInitEffect = (ref: any) => {
   const [isPip, setIsPip] = useState(false);
   const [loading, setLoading] = useState(true);
   const [isPlay, setIsPlay] = useState<any>(null);
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= MOBILE_WIDTH);
+  const [containerWidth, setContainerWidth] = useState(window.innerWidth);
   const [isError, setIsError] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const [isEnded, setIsEnded] = useState(false);
@@ -240,12 +239,9 @@ export const useInitEffect = (ref: any) => {
         window.removeEventListener("keydown", handleKeyDown);
       }
     };
+
     const handleResize = () => {
-      if (containerRef.current?.offsetWidth! <= MOBILE_WIDTH) {
-        setIsMobile(true);
-      } else {
-        setIsMobile(false);
-      }
+      setContainerWidth(containerRef.current?.offsetWidth!);
     };
 
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -393,6 +389,6 @@ export const useInitEffect = (ref: any) => {
     setDevice,
     setTimeClock,
     isEffectPlay,
-    isMobile,
+    containerWidth,
   ];
 };

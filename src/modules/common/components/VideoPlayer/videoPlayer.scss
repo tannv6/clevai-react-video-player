@@ -43,19 +43,30 @@
         left: 30px;
       }
     }
-    &-need-zoom {
+    &-need-zoom-1 {
       .main-controls,
       .video-title,
       .play-effect-container,
       .btn-replay,
-      .seek-effect-container {
-        zoom: 0.6;
+      .seek-effect-container,
+      .play-button-container {
+        zoom: 0.8;
       }
       .player-progress {
         margin-bottom: 5px;
         .slider-title {
           font-size: 12px;
         }
+      }
+    }
+    &-need-zoom-2 {
+      .main-controls,
+      .video-title,
+      .play-effect-container,
+      .btn-replay,
+      .seek-effect-container,
+      .play-button-container {
+        zoom: 0.6;
       }
     }
   }
