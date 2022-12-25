@@ -1,13 +1,15 @@
-import { useLayoutEffect, useState } from "react";
+import { useContext, useLayoutEffect, useState } from "react";
 import { IconCheck } from "../../../assets/icons";
+import { Context } from "../../../utils/hooks";
 import "./setting.scss";
 type Props = {
   videoRef: any;
-  showSetting: boolean;
-  setShowSetting: any;
-  isMobile: boolean;
 };
-function Setting({ videoRef, showSetting, setShowSetting, isMobile }: Props) {
+function Setting({ videoRef }: Props) {
+  const {
+    state: { showSetting, device },
+  } = useContext(Context);
+  const isMobile = device === "TOUCH";
   const [settingType, setSettingType] = useState<"SPEED" | "QUALITY">("SPEED");
   const [showList, setShowList] = useState(false);
   const handleChange = (type: "SPEED" | "QUALITY", speed: number | string) => {
@@ -27,6 +29,7 @@ function Setting({ videoRef, showSetting, setShowSetting, isMobile }: Props) {
     SPEED: videoRef.current?.playbackRate,
     QUALITY: "Auto",
   };
+
   return (
     <div
       className={`setting-wrapper ${

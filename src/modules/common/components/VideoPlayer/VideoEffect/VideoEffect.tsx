@@ -4,34 +4,32 @@ import ReplayButton from "../ReplayButton";
 import SeekEffect from "../SeekEffect";
 import SpinnerLoading from "../SpinnerLoading";
 import VideoTitle from "../VideoTitle";
-
+import { useContext } from "react";
+import { Context } from "../../../utils/hooks";
 function VideoEffect({
   title,
-  controlsShow,
-  isFullScreen,
   handleFullScreen,
-  loading,
-  isPlay,
-  isTouchAble,
-  loaded,
-  isEffectPlay,
   handlePlayVideo,
-  isEnded,
-  showEffect,
-  seekEffect,
   handleReplayVideo,
 }: any) {
+  const {
+    state: {
+      seekEffect,
+      controlsShow,
+      loading,
+      isPlay,
+      loaded,
+      isEffectPlay,
+      isEnded,
+      showEffect,
+      device,
+    },
+  } = useContext(Context);
+  const isTouchAble = device === "TOUCH";
   return (
     <>
-      <VideoTitle
-        title={title || ""}
-        controlsShow={controlsShow}
-        isFullScreen={isFullScreen}
-        handleFullScreen={handleFullScreen}
-      />
-      {((loading && isPlay) || !loaded) && (
-        <SpinnerLoading className="video-player-loading" />
-      )}
+      <VideoTitle title={title || ""} handleFullScreen={handleFullScreen} />
+      {((loading && isPlay) || !loaded) && <SpinnerLoading />}
       {isTouchAble && loaded && (controlsShow || !isPlay) ? (
         <PlayButton isPlay={isPlay} onClick={handlePlayVideo} />
       ) : !isTouchAble && loaded && !isEnded && showEffect ? (

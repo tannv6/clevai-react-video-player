@@ -6,46 +6,37 @@
   visibility: hidden;
   opacity: 0;
   transition: 0.3s ease-in-out;
-  padding: 10px 5px;
+  padding: 0.5em 0.25em;
   background: linear-gradient(to bottom, #00000000, #00000090);
   &-show {
     visibility: visible;
     opacity: 1;
   }
+  img {
+    display: block;
+  }
   .main-controls {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 4px 0;
+    margin: 0.2em 0;
     .main-controls_left {
       display: flex;
       align-items: center;
       .btn-play-pause {
-        background: none;
-        outline: none;
-        border: none;
-        cursor: pointer;
-        padding: 0;
-        margin: 0 10px;
+        margin: 0 0.5em;
         display: flex;
         align-items: center;
         justify-content: center;
       }
       .clock {
         color: white;
-        margin-left: 10px;
+        margin-left: 0.5em;
         display: inline-flex;
-        font-size: 14px;
+        font-size: 0.7em;
       }
       .btn-rewind {
-        background: none;
-        outline: none;
-        border: none;
-        cursor: pointer;
-        padding: 0;
-        margin: 0 10px;
-        height: 14px;
-        font-size: 14px;
+        margin: 0 0.5em;
         .icon-rewind {
           height: 100%;
           display: inline-flex;
@@ -58,47 +49,30 @@
         }
       }
       .btn-fast-forward {
-        background: none;
-        outline: none;
-        border: none;
-        cursor: pointer;
-        padding: 0;
-        margin: 0 10px;
-        height: 14px;
-        font-size: 14px;
+        margin: 0 0.5em;
         img {
           transform: scaleX(-1);
         }
       }
       .btn-volume {
-        background: none;
-        outline: none;
-        border: none;
-        cursor: pointer;
-        padding: 0 10px;
+        padding: 0 0.5em;
         position: relative;
         z-index: 5;
         display: inline-flex;
         -webkit-tap-highlight-color: transparent;
-        display: flex;
         align-items: center;
-        height: 20px;
+        height: 1em;
         img {
           height: 100%;
         }
         .input-volume {
-          padding: 0;
-          margin: 0;
-          cursor: pointer;
-          border-radius: 0px;
           -webkit-appearance: none;
           transition: 0.3s ease-out;
           z-index: 1;
-          margin-left: 6px;
+          margin-left: 0.3em;
           -webkit-tap-highlight-color: transparent;
-          width: 50px;
-          height: 3px;
-          background-color: white;
+          width: 2.5em;
+          height: 0.15em;
           &::-webkit-slider-thumb {
             background-color: white;
             -webkit-appearance: none;
@@ -109,8 +83,8 @@
           &:hover,
           &-hover {
             &::-webkit-slider-thumb {
-              width: 10px;
-              height: 10px;
+              width: 0.5em;
+              height: 0.5em;
             }
           }
         }
@@ -123,12 +97,7 @@
         display: block;
       }
       .btn-setting {
-        background: none;
-        outline: none;
-        border: none;
-        cursor: pointer;
-        padding: 0;
-        margin: 0 15px;
+        margin: 0 0.75em;
         -webkit-tap-highlight-color: transparent;
         &-show {
           img {
@@ -140,27 +109,19 @@
         }
       }
       .btn-pip {
-        background: none;
-        outline: none;
-        border: none;
-        cursor: pointer;
-        padding: 0 15px;
+        padding: 0 0.75em;
         -webkit-tap-highlight-color: transparent;
       }
       .btn-full-screen {
-        background: none;
-        outline: none;
-        border: none;
-        cursor: pointer;
-        padding: 0 15px;
+        padding: 0 0.75em;
         -webkit-tap-highlight-color: transparent;
       }
     }
   }
 
   .player-progress {
-    margin-bottom: 10px;
-    height: 24px;
+    margin-bottom: 0.5em;
+    height: 1.2em;
     position: relative;
     display: flex;
     cursor: pointer;
@@ -174,12 +135,13 @@
       color: white;
       transform: translateX(-50%);
       display: none;
+      font-size: 0.7em;
       &.slider-title-show {
         display: inline-block;
       }
     }
     .progress-bar {
-      height: 3px;
+      height: 0.15em;
       width: 100%;
       transition: 0.2s linear;
       transform: scaleY(1);
@@ -187,8 +149,8 @@
     }
     .circle-range-point {
       display: inline-block;
-      width: 0px;
-      height: 0px;
+      width: 0;
+      height: 0;
       background-color: #1877f2;
       position: absolute;
       top: 50%;
@@ -201,52 +163,52 @@
         transform: scaleY(1.4);
       }
       .circle-range-point {
-        width: 12px;
-        height: 12px;
+        width: 0.6em;
+        height: 0.6em;
       }
     }
   }
 }
 .video-wrapper-is-mobile {
   .controls {
-    padding: 10px 5px 5px;
+    padding: 0.5em 0.25em 0.25em;
     .main-controls {
       .main-controls_left {
         .clock {
-          font-size: 14px;
-          margin-left: 7px;
+          font-size: 0.7em;
+          margin-left: 0.35em;
         }
         button {
           &.btn-play-pause {
             display: none;
           }
           &.btn-rewind {
-            margin: 0 7px 0 0;
+            margin: 0 0.35em 0 0;
             display: none;
           }
           &.btn-fast-forward {
-            margin: 0 7px;
+            margin: 0 0.35em;
             display: none;
           }
           &.btn-volume {
-            padding: 0 7px;
+            padding: 0 0.35em;
           }
         }
       }
       .main-controls_right {
         .btn-setting {
-          margin: 0 7px;
+          margin: 0 0.35em;
         }
         .btn-pip {
-          padding: 0 7px;
+          padding: 0 0.35em;
         }
         .btn-full-screen {
-          padding: 0 7px;
+          padding: 0 0.35em;
         }
       }
     }
     .player-progress {
-      margin-bottom: 5px;
+      margin-bottom: 0.25em;
     }
   }
 }

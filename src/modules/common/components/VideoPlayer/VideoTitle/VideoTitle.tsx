@@ -1,52 +1,43 @@
-import { useRef } from "react";
+import { useRef, useContext } from "react";
 import { IconExpand } from "../../../assets/icons";
+import { Context } from "../../../utils/hooks";
+import {
+  BtnExitFull,
+  TextWrapper,
+  TitleContainer,
+  Text,
+} from "../StyledComponents";
 import "./videoTitle.scss";
 
 type Props = {
   title: string;
-  controlsShow: boolean;
-  isFullScreen: boolean;
   handleFullScreen: any;
 };
-function VideoTitle({
-  title,
-  controlsShow,
-  isFullScreen,
-  handleFullScreen,
-}: Props) {
+function VideoTitle({ title, handleFullScreen }: Props) {
+  const {
+    state: { controlsShow, isFullScreen },
+  } = useContext(Context);
   const ref = useRef<HTMLParagraphElement>(null);
+  const show = controlsShow && isFullScreen;
+  const time =
+    ((ref.current?.offsetWidth || 0) /
+      (ref.current?.parentElement?.offsetWidth || 1)) *
+    10;
+  const leftNeed =
+    (ref.current?.offsetWidth || 0) -
+    (ref.current?.parentElement?.offsetWidth || 0) +
+    30;
   return (
-    <div
-      className={`video-title ${
-        controlsShow && isFullScreen ? "video-title-show" : ""
-      }`}
-    >
-      <button className="video-title__btn-exit-full" onClick={handleFullScreen}>
+    <TitleContainer theme={{ show }}>
+      <BtnExitFull onClick={handleFullScreen}>
         <img src={IconExpand} alt="" />
-      </button>
-      <div className="video-title__text">
-        {/* ts-ignore */}
-        <p
-          ref={ref}
-          style={
-            {
-              "--left-need": `-${
-                (ref.current?.offsetWidth || 0) -
-                (ref.current?.parentElement?.offsetWidth || 0) +
-                30
-              }px`,
-              "--time": `${
-                ((ref.current?.offsetWidth || 0) /
-                  (ref.current?.parentElement?.offsetWidth || 1)) *
-                10
-              }s`,
-            } as any
-          }
-        >
+      </BtnExitFull>
+      <TextWrapper>
+        <Text ref={ref} theme={{ leftNeed, time }}>
           {title}
-        </p>
-      </div>
-    </div>
+        </Text>
+      </TextWrapper>
+    </TitleContainer>
   );
 }
 

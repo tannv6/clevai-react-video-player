@@ -1,6 +1,6 @@
 .play-effect-container {
-  width: 40px;
-  height: 40px;
+  width: 2em;
+  height: 2em;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -19,20 +19,20 @@
   border-radius: 50%;
   .play-icon {
     border-style: solid;
-    border-width: 10px 0px 10px 17px;
+    border-width: 0.5em 0 0.5em 0.85em;
     border-color: transparent transparent transparent white;
     transform: translateX(2px);
   }
   .pause-icon {
-    width: 20px;
-    height: 20px;
+    width: 1em;
+    height: 1em;
     display: flex;
     justify-content: space-around;
     * {
-      width: 6px;
+      width: 0.3em;
       height: 100%;
       background-color: white;
-      border-radius: 3px;
+      border-radius: 0.15em;
     }
   }
   @keyframes play-effect {

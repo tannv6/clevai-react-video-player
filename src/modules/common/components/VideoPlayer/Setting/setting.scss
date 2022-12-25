@@ -1,11 +1,11 @@
 .setting-wrapper {
   position: absolute;
-  right: 20px;
+  right: 1em;
   border-radius: 4px;
-  width: 150px;
+  width: 7.5em;
   height: auto;
   font-family: Arial, Helvetica, sans-serif;
-  padding: 5px 0;
+  padding: 0.25em 0;
   box-sizing: border-box;
   background-color: #333333d6;
   color: #fff;
@@ -23,7 +23,7 @@
     top: 0;
     transition: 0.1s ease-in;
     .st-opt {
-      padding: 10px;
+      padding: 0.5em;
       font-weight: 600;
       cursor: pointer;
       display: flex;
@@ -35,10 +35,10 @@
         align-items: center;
         .st-otp__current-value__arrow {
           border-style: solid;
-          border-width: 5px 0px 5px 5px;
+          border-width: 0.25em 0 0.25em 0.25em;
           border-color: transparent transparent transparent white;
           display: inline-block;
-          margin-left: 5px;
+          margin-left: 0.25em;
         }
       }
       &:hover {
@@ -54,21 +54,21 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-    padding: 0 0 5px 0;
+    padding: 0 0 0.25em 0;
     box-sizing: border-box;
     .title {
-      padding: 5px;
+      padding: 0.25em;
       cursor: default;
       border-bottom: 1px solid #5b5a5a;
       .title__btn-back {
-        padding: 5px 20px 5px 10px;
+        padding: 0.25em 1em 0.25em 0.5em;
         background: none;
         outline: none;
         border: none;
         cursor: pointer;
         .title__btn-back__arrow {
           border-style: solid;
-          border-width: 5px 5px 5px 0px;
+          border-width: 0.25em 0.25em 0.25em 0;
           border-color: transparent white transparent transparent;
           display: inline-block;
         }
@@ -84,22 +84,22 @@
       flex: 1;
       overflow: auto;
       &::-webkit-scrollbar {
-        width: 5px;
+        width: 0.25em;
       }
       &::-webkit-scrollbar-thumb {
         background-color: #b1b1b1ae;
-        width: 5px;
+        width: 0.25em;
         // border-radius: 3px;
       }
       li {
         cursor: pointer;
-        padding: 10px 20px;
+        padding: 0.5em 1em;
         &:hover {
           background-color: #b1b1b133;
         }
         .icon-check {
-          width: 14px;
-          margin-right: 10px;
+          width: 0.7em;
+          margin-right: 0.5em;
         }
       }
     }

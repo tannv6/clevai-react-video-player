@@ -1,22 +1,25 @@
 .spinner-loading {
   color: official;
   display: inline-block;
-  position: relative;
-  width: 80px;
-  height: 80px;
+  width: 4em;
+  height: 4em;
   animation: delay-appear 2s linear;
   visibility: hidden;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   div {
-    transform-origin: 40px 40px;
+    transform-origin: 2em 2em;
     animation: lds-spinner 1.2s linear infinite;
     &:after {
       content: " ";
       display: block;
       position: absolute;
-      top: 3px;
-      left: 37px;
-      width: 6px;
-      height: 18px;
+      top: 0.15em;
+      left: 1.85em;
+      width: 0.3em;
+      height: 0.9em;
       border-radius: 20%;
       background: #fff;
     }

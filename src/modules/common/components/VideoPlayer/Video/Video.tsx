@@ -1,52 +1,51 @@
+import { useContext } from "react";
+import { ACTIONS_TYPE, Context } from "../../../utils/hooks";
+import { VideoElement } from "../StyledComponents";
 function Video({
   videoRef,
   handleDoubleClick,
   handleClickVideo,
   mute,
-  setLoading,
-  setIsError,
   autoPlay,
-  setIsPlay,
-  setLoaded,
-  setIsEnded,
   url,
 }: any) {
+  const { dispatch } = useContext(Context);
   return (
-    <video
+    <VideoElement
       ref={videoRef}
       onDoubleClick={handleDoubleClick}
       onClick={handleClickVideo}
       onContextMenu={(e) => e.preventDefault()}
       muted={mute}
       onLoadStart={() => {
-        setLoading(true);
+        dispatch({ type: ACTIONS_TYPE.SET_LOADING, res: true });
       }}
       onCanPlay={() => {
-        setLoading(false);
-        setIsError(false);
+        dispatch({ type: ACTIONS_TYPE.SET_LOADING, res: false });
+        dispatch({ type: ACTIONS_TYPE.SET_IS_ERROR, res: false });
       }}
       autoPlay={autoPlay}
       onWaiting={() => {
-        setLoading(true);
+        dispatch({ type: ACTIONS_TYPE.SET_LOADING, res: true });
       }}
       onPlay={() => {
-        setIsPlay(true);
+        dispatch({ type: ACTIONS_TYPE.SET_IS_PLAY, res: true });
       }}
       onPause={() => {
-        setIsPlay(false);
+        dispatch({ type: ACTIONS_TYPE.SET_IS_PLAY, res: false });
       }}
       onError={() => {
-        setIsError(true);
+        dispatch({ type: ACTIONS_TYPE.SET_IS_ERROR, res: true });
       }}
       onLoadedMetadata={() => {
-        setLoaded(true);
+        dispatch({ type: ACTIONS_TYPE.SET_LOADED, res: true });
       }}
       onEnded={() => {
-        setIsEnded(true);
+        dispatch({ type: ACTIONS_TYPE.SET_IS_ENDED, res: true });
       }}
     >
       <source src={url} type="video/mp4" />
-    </video>
+    </VideoElement>
   );
 }
 

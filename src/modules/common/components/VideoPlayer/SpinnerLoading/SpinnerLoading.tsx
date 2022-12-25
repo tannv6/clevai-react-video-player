@@ -1,10 +1,8 @@
 import "./spinnerLoading.scss";
-type Props = {
-  className: string;
-};
-function SpinnerLoading({ className }: Props) {
+
+function SpinnerLoading() {
   return (
-    <div className={`spinner-loading ${className}`}>
+    <div className={`spinner-loading`}>
       <div></div>
       <div></div>
       <div></div>

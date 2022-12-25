@@ -7,7 +7,11 @@ type Props = {
 };
 function SeekEffect({ time, timeUnit, className, type }: Props) {
   return (
-    <div className={`seek-effect-container ${className}`}>
+    <div
+      className={`seek-effect-container ${className}  ${
+        type === "BACKWARD" ? "seek-effect-container-backward" : ""
+      }`}
+    >
       <div
         className={`seek-effect-wrapper ${
           type === "BACKWARD" ? "seek-effect-wrapper-backward" : ""

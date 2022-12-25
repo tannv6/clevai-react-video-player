@@ -1,59 +1,34 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef, createContext } from "react";
 import { isTouchDevice } from "./functions";
-export const useInitEffect = (ref: any) => {
+export const useInitEffect = (ref: any, state: TStates, dispatch: any) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const videoRef = ref || useRef<HTMLVideoElement>(null);
   const timerShowControls = useRef<any>(null);
   const timeStart = useRef(0);
-  const [controlsShow, setControlsShow] = useState(false);
-  const [range, setRange] = useState(0);
-  const [isFullScreen, setIsFullScreen] = useState(false);
-  const [isPip, setIsPip] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [isPlay, setIsPlay] = useState<any>(null);
-  const [containerWidth, setContainerWidth] = useState(window.innerWidth);
-  const [isError, setIsError] = useState(false);
-  const [loaded, setLoaded] = useState(false);
-  const [isEnded, setIsEnded] = useState(false);
-  const [showSetting, setShowSetting] = useState(false);
-  const [timeClock, setTimeClock] = useState(0);
-  const [isEffectPlay, setIsEffectPlay] = useState(false);
+  const { controlsShow, showSetting, device, isPlay, range } = state;
   const timerClickPlay = useRef<any>({});
-  const [device, setDevice] = useState<"TOUCH" | "NO_TOUCH">(
-    isTouchDevice() ? "TOUCH" : "NO_TOUCH"
-  );
   const timerClickRef = useRef<any>(null);
-  const [showEffect, setShowEffect] = useState(false);
   const timerShowPlayEffectRef = useRef<any>(null);
   const playEffect = (isPlay: boolean) => {
-    setShowEffect(true);
-    setIsEffectPlay(isPlay);
+    dispatch({ type: ACTIONS_TYPE.SET_SHOW_EFFECT, res: true }); //
+    dispatch({ type: ACTIONS_TYPE.SET_IS_EFFECT_PLAY, res: isPlay }); //
     clearTimeout(timerShowPlayEffectRef.current);
     timerShowPlayEffectRef.current = setTimeout(() => {
-      setShowEffect(false);
+      dispatch({ type: ACTIONS_TYPE.SET_SHOW_EFFECT, res: false }); //
     }, 500);
   };
-  const [seekEffect, setSeekEffect] = useState<{
-    show: boolean;
-    type: "BACKWARD" | "FORWARD" | "";
-    key: number;
-  }>({
-    show: false,
-    type: "",
-    key: 0,
-  });
 
   const isTouchAble = device === "TOUCH";
 
   useEffect(() => {
     if (controlsShow) {
       if (isTouchDevice()) {
-        setDevice("TOUCH");
+        dispatch({ type: ACTIONS_TYPE.SET_DEVICE, res: "TOUCH" }); //
       } else {
-        setDevice("NO_TOUCH");
+        dispatch({ type: ACTIONS_TYPE.SET_DEVICE, res: "NO_TOUCH" }); //
       }
     }
   }, [controlsShow]);
@@ -75,14 +50,14 @@ export const useInitEffect = (ref: any) => {
 
   const handleShowControls = () => {
     clearTimeout(timerShowControls.current);
-    setControlsShow(true);
+    dispatch({ type: ACTIONS_TYPE.SET_CONTROLS_SHOW, res: true }); //
   };
 
   const handleClickVideo = (e: any) => {
     e.preventDefault();
     holdControlsShow();
     if (showSetting) {
-      setShowSetting(false);
+      dispatch({ type: ACTIONS_TYPE.SET_SHOW_SETTING, res: false });
     } else {
       if (controlsShow && !isTouchAble) {
         if (videoRef.current?.paused || videoRef.current?.ended) {
@@ -125,9 +100,9 @@ export const useInitEffect = (ref: any) => {
           timerClickRef.current = setTimeout(() => {
             if (controlsShow && isTouchAble) {
               clearTimeout(timerShowControls.current);
-              setControlsShow(false);
+              dispatch({ type: ACTIONS_TYPE.SET_CONTROLS_SHOW, res: false }); //
             } else if (!controlsShow && isTouchAble) {
-              setControlsShow(true);
+              dispatch({ type: ACTIONS_TYPE.SET_CONTROLS_SHOW, res: true }); //
             }
           }, 250);
         } else {
@@ -140,17 +115,17 @@ export const useInitEffect = (ref: any) => {
   const handleFullScreen = () => {
     if (document.fullscreenElement) {
       document.exitFullscreen();
-      setIsFullScreen(false);
+      dispatch({ type: ACTIONS_TYPE.SET_IS_FULLSCREEN, res: false });
     } else if (!document.fullscreenElement) {
       if ((document as any).webkitFullscreenElement) {
         (document as any).webkitExitFullscreen();
-        setIsFullScreen(true);
+        dispatch({ type: ACTIONS_TYPE.SET_IS_FULLSCREEN, res: true });
       } else if ((wrapperRef?.current as any)?.webkitRequestFullscreen) {
         (wrapperRef?.current as any)?.webkitRequestFullscreen();
-        setIsFullScreen(true);
+        dispatch({ type: ACTIONS_TYPE.SET_IS_FULLSCREEN, res: true });
       } else {
         wrapperRef?.current?.requestFullscreen();
-        setIsFullScreen(true);
+        dispatch({ type: ACTIONS_TYPE.SET_IS_FULLSCREEN, res: true });
       }
     }
   };
@@ -160,27 +135,27 @@ export const useInitEffect = (ref: any) => {
     if (!showSetting && !videoRef.current?.paused) {
       timeStart.current = Date.now();
       timerShowControls.current = setTimeout(() => {
-        setControlsShow(false);
-      }, 6000);
+        dispatch({ type: ACTIONS_TYPE.SET_CONTROLS_SHOW, res: false }); //
+      }, 60000000);
     }
   };
 
   const handleMouseMove = (e: any) => {
     if (!(e.target.id || "")?.includes("progress")) {
       if (!controlsShow) {
-        setControlsShow(true);
+        dispatch({ type: ACTIONS_TYPE.SET_CONTROLS_SHOW, res: true }); //
         holdControlsShow();
-      } else if (Date.now() - timeStart.current < 6000) {
+      } else if (Date.now() - timeStart.current < 60000000) {
         holdControlsShow();
       }
     }
   };
 
   const handleMouseLeave = () => {
-    if (!showSetting && !videoRef.current?.paused) {
-      clearTimeout(timerShowControls.current);
-      setControlsShow(false);
-    }
+    // if (!showSetting && !videoRef.current?.paused) {
+    //   clearTimeout(timerShowControls.current);
+    //   dispatch({ type: ACTIONS_TYPE.SET_CONTROLS_SHOW, res: false }); //
+    // }
   };
 
   const handleSeek = (type: "FORWARD" | "BACKWARD") => {
@@ -193,31 +168,49 @@ export const useInitEffect = (ref: any) => {
         videoRef.current?.currentTime < total
       ) {
         videoRef.current.currentTime = videoRef.current?.currentTime! + 10;
-        setTimeClock(videoRef.current.currentTime || 0);
-        setRange((range) => range + (10 / total) * 100);
-        setSeekEffect({
-          show: true,
-          type: "FORWARD",
-          key: Math.random(),
+        dispatch({
+          type: ACTIONS_TYPE.SET_TIME_CLOCK,
+          res: videoRef.current.currentTime || 0,
+        }); //
+        dispatch({
+          type: ACTIONS_TYPE.SET_RANGE,
+          res: range + (10 / total) * 100,
         });
+        dispatch({
+          type: ACTIONS_TYPE.SET_SEEK_EFFECT,
+          res: {
+            show: true,
+            type: "FORWARD",
+            key: Math.random(),
+          },
+        }); //
       }
     } else {
       if (videoRef.current?.currentTime) {
         videoRef.current.currentTime = videoRef.current?.currentTime! - 10;
-        setTimeClock(videoRef.current.currentTime || 0);
-        setRange((range) => range - (10 / total) * 100);
-        setSeekEffect({
-          show: true,
-          type: "BACKWARD",
-          key: Math.random(),
+        dispatch({
+          type: ACTIONS_TYPE.SET_TIME_CLOCK,
+          res: videoRef.current.currentTime || 0,
+        }); //
+        dispatch({
+          type: ACTIONS_TYPE.SET_RANGE,
+          res: range - (10 / total) * 100,
         });
+        dispatch({
+          type: ACTIONS_TYPE.SET_SEEK_EFFECT,
+          res: {
+            show: true,
+            type: "BACKWARD",
+            key: Math.random(),
+          },
+        }); //
       }
     }
   };
 
   useEffect(() => {
     if (isPlay) {
-      setIsEnded(false);
+      dispatch({ type: ACTIONS_TYPE.SET_IS_ENDED, res: false });
     }
   }, [isPlay]);
 
@@ -241,21 +234,24 @@ export const useInitEffect = (ref: any) => {
     };
 
     const handleResize = () => {
-      setContainerWidth(containerRef.current?.offsetWidth!);
+      dispatch({
+        type: ACTIONS_TYPE.SET_CONTAINER_WIDTH,
+        res: containerRef.current?.offsetWidth!,
+      });
     };
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.code === "ArrowRight") {
         e.preventDefault();
-        setControlsShow(true);
+        dispatch({ type: ACTIONS_TYPE.SET_CONTROLS_SHOW, res: true }); //
         handleSeek("FORWARD");
       } else if (e.code === "ArrowLeft") {
         e.preventDefault();
-        setControlsShow(true);
+        dispatch({ type: ACTIONS_TYPE.SET_CONTROLS_SHOW, res: true }); //
         handleSeek("BACKWARD");
       } else if (e.code === "Space") {
         e.preventDefault();
-        setControlsShow(true);
+        dispatch({ type: ACTIONS_TYPE.SET_CONTROLS_SHOW, res: true }); //
         handlePlayVideo();
       }
     };
@@ -266,15 +262,15 @@ export const useInitEffect = (ref: any) => {
         !(document as any).mozFullScreen &&
         !(document as any).msFullscreenElement
       ) {
-        setIsFullScreen(false);
+        dispatch({ type: ACTIONS_TYPE.SET_IS_FULLSCREEN, res: false });
       }
     };
 
     const handleClickOutSite = (e: any) => {
       if (!containerRef.current?.contains(e.target as any)) {
         clearTimeout(timerShowControls.current);
-        setControlsShow(false);
-        setShowSetting(false);
+        dispatch({ type: ACTIONS_TYPE.SET_CONTROLS_SHOW, res: false }); //
+        dispatch({ type: ACTIONS_TYPE.SET_SHOW_SETTING, res: false }); //
       }
     };
 
@@ -283,7 +279,7 @@ export const useInitEffect = (ref: any) => {
     window.addEventListener("keydown", handleKeyDown);
     document.addEventListener("focusin", handleDOMFocusIn);
     const handleLeavePip = () => {
-      setIsPip(false);
+      dispatch({ type: ACTIONS_TYPE.SET_IS_PIP, res: false });
     };
     videoRef.current?.addEventListener("leavepictureinpicture", handleLeavePip);
     window.addEventListener("click", handleClickOutSite);
@@ -327,9 +323,9 @@ export const useInitEffect = (ref: any) => {
 
   const handleClickSetting = () => {
     if (showSetting) {
-      setShowSetting(false);
+      dispatch({ type: ACTIONS_TYPE.SET_SHOW_SETTING, res: false });
     } else {
-      setShowSetting(true);
+      dispatch({ type: ACTIONS_TYPE.SET_SHOW_SETTING, res: true });
       clearTimeout(timerShowControls.current);
     }
   };
@@ -349,46 +345,166 @@ export const useInitEffect = (ref: any) => {
     }
   };
   return [
-    range,
-    isFullScreen,
-    isPip,
-    loading,
-    setLoading,
-    setIsPlay,
-    isError,
-    setIsError,
-    loaded,
-    setLoaded,
     handleMouseMove,
-    handleClickSetting,
     handleDoubleClick,
     handleReplayVideo,
     handleMouseLeave,
     handleShowControls,
     handleClickVideo,
-    isEnded,
-    timeClock,
-    showEffect,
-    seekEffect,
     containerRef,
-    isTouchAble,
     wrapperRef,
-    controlsShow,
     handleFullScreen,
     handlePlayVideo,
-    isPlay,
     videoRef,
-    setIsEnded,
-    showSetting,
     handleSeek,
-    setRange,
     holdControlsShow,
-    setIsPip,
-    setShowSetting,
-    device,
-    setDevice,
-    setTimeClock,
-    isEffectPlay,
-    containerWidth,
+    handleClickSetting,
   ];
+};
+
+export const Context = createContext({} as any);
+type TStates = {
+  showSetting: boolean;
+  controlsShow: boolean;
+  isFullScreen: boolean;
+  range: number;
+  isPip: boolean;
+  loading: boolean;
+  isPlay: any;
+  containerWidth: number;
+  isError: boolean;
+  loaded: boolean;
+  isEnded: boolean;
+  timeClock: number;
+  isEffectPlay: boolean;
+  device: "TOUCH" | "NO_TOUCH";
+  seekEffect: any;
+  showEffect: boolean;
+};
+export const initState: TStates = {
+  showSetting: false,
+  controlsShow: false,
+  isFullScreen: false,
+  range: 0,
+  isPip: false,
+  loading: true,
+  isPlay: null,
+  containerWidth: window.innerWidth,
+  isError: false,
+  loaded: false,
+  isEnded: false,
+  timeClock: 0,
+  isEffectPlay: false,
+  showEffect: false,
+  seekEffect: {
+    show: false,
+    type: "",
+    key: 0,
+  },
+  device: isTouchDevice() ? "TOUCH" : "NO_TOUCH",
+};
+export const reducer = (state: TStates, action: any): TStates => {
+  switch (action.type) {
+    case ACTIONS_TYPE.SET_SHOW_SETTING:
+      return {
+        ...state,
+        showSetting: action.res,
+      };
+    case ACTIONS_TYPE.SET_CONTROLS_SHOW:
+      return {
+        ...state,
+        controlsShow: action.res,
+      };
+    case ACTIONS_TYPE.SET_CONTAINER_WIDTH:
+      return {
+        ...state,
+        containerWidth: action.res,
+      };
+    case ACTIONS_TYPE.SET_IS_FULLSCREEN:
+      return {
+        ...state,
+        isFullScreen: action.res,
+      };
+    case ACTIONS_TYPE.SET_IS_EFFECT_PLAY:
+      return {
+        ...state,
+        isEffectPlay: action.res,
+      };
+    case ACTIONS_TYPE.SET_IS_ENDED:
+      return {
+        ...state,
+        isEnded: action.res,
+      };
+    case ACTIONS_TYPE.SET_IS_PIP:
+      return {
+        ...state,
+        isPip: action.res,
+      };
+    case ACTIONS_TYPE.SET_IS_ERROR:
+      return {
+        ...state,
+        isError: action.res,
+      };
+    case ACTIONS_TYPE.SET_IS_PLAY:
+      return {
+        ...state,
+        isPlay: action.res,
+      };
+    case ACTIONS_TYPE.SET_LOADED:
+      return {
+        ...state,
+        loaded: action.res,
+      };
+    case ACTIONS_TYPE.SET_LOADING:
+      return {
+        ...state,
+        loading: action.res,
+      };
+    case ACTIONS_TYPE.SET_RANGE:
+      return {
+        ...state,
+        range: action.res,
+      };
+    case ACTIONS_TYPE.SET_TIME_CLOCK:
+      return {
+        ...state,
+        timeClock: action.res,
+      };
+    case ACTIONS_TYPE.SET_SHOW_EFFECT:
+      return {
+        ...state,
+        showEffect: action.res,
+      };
+    case ACTIONS_TYPE.SET_DEVICE:
+      return {
+        ...state,
+        device: action.res,
+      };
+    case ACTIONS_TYPE.SET_SEEK_EFFECT:
+      return {
+        ...state,
+        seekEffect: action.res,
+      };
+    default:
+      return state;
+  }
+};
+export const ACTIONS_TYPE = {
+  SET_SHOW_SETTING: "SET_SHOW_SETTING",
+  SET_CONTROLS_SHOW: "SET_CONTROLS_SHOW",
+  SET_RANGE: "SET_RANGE",
+  SET_IS_FULLSCREEN: "SET_IS_FULLSCREEN",
+  SET_IS_PIP: "SET_IS_PIP",
+  SET_LOADING: "SET_LOADING",
+  SET_IS_PLAY: "SET_IS_PLAY",
+  SET_CONTAINER_WIDTH: "SET_CONTAINER_WIDTH",
+  SET_IS_ERROR: "SET_IS_ERROR",
+  SET_LOADED: "SET_LOADED",
+  SET_IS_ENDED: "SET_IS_ENDED",
+  SET_TIME_CLOCK: "SET_TIME_CLOCK",
+  SET_IS_EFFECT_PLAY: "SET_IS_EFFECT_PLAY",
+  SET_EFFECT: "SET_EFFECT",
+  SET_SHOW_EFFECT: "SET_SHOW_EFFECT",
+  SET_SEEK_EFFECT: "SET_SEEK_EFFECT",
+  SET_DEVICE: "SET_DEVICE",
 };

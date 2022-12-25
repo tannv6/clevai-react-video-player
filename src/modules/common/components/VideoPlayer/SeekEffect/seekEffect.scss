@@ -1,6 +1,6 @@
 .seek-effect-container {
-  width: 100px;
-  height: 100px;
+  width: 5em;
+  height: 5em;
   border-radius: 50%;
   background: #00000070;
   display: flex;
@@ -8,7 +8,14 @@
   justify-content: center;
   flex-direction: column;
   animation: just-show 1s linear forwards;
-  font-size: 20px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 2.5em;
+  &-backward {
+    right: unset;
+    left: 2.5em;
+  }
   .seek-effect-wrapper {
     width: 100%;
     display: flex;
@@ -61,6 +68,5 @@
   .seek-effect-container {
     width: 75px;
     height: 75px;
-    font-size: 15px;
   }
 }
