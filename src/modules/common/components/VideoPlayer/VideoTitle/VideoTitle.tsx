@@ -7,7 +7,6 @@ import {
   TitleContainer,
   Text,
 } from "../StyledComponents";
-import "./videoTitle.scss";
 
 type Props = {
   title: string;

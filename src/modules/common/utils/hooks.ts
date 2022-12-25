@@ -136,7 +136,7 @@ export const useInitEffect = (ref: any, state: TStates, dispatch: any) => {
       timeStart.current = Date.now();
       timerShowControls.current = setTimeout(() => {
         dispatch({ type: ACTIONS_TYPE.SET_CONTROLS_SHOW, res: false }); //
-      }, 60000000);
+      }, 6000);
     }
   };
 
@@ -145,17 +145,17 @@ export const useInitEffect = (ref: any, state: TStates, dispatch: any) => {
       if (!controlsShow) {
         dispatch({ type: ACTIONS_TYPE.SET_CONTROLS_SHOW, res: true }); //
         holdControlsShow();
-      } else if (Date.now() - timeStart.current < 60000000) {
+      } else if (Date.now() - timeStart.current < 6000) {
         holdControlsShow();
       }
     }
   };
 
   const handleMouseLeave = () => {
-    // if (!showSetting && !videoRef.current?.paused) {
-    //   clearTimeout(timerShowControls.current);
-    //   dispatch({ type: ACTIONS_TYPE.SET_CONTROLS_SHOW, res: false }); //
-    // }
+    if (!showSetting && !videoRef.current?.paused) {
+      clearTimeout(timerShowControls.current);
+      dispatch({ type: ACTIONS_TYPE.SET_CONTROLS_SHOW, res: false }); //
+    }
   };
 
   const handleSeek = (type: "FORWARD" | "BACKWARD") => {
