@@ -1,17 +1,19 @@
-import { memo } from "react";
+import { memo, useContext } from "react";
+import { Context } from "../../../utils/hooks";
 import "./playEffect.scss";
-type Props = {
-  isPlay?: boolean;
-};
-function PlayEffect({ isPlay }: Props) {
-  return (
+
+function PlayEffect() {
+  const { loaded, isEffectPlay, isEnded, showEffect, device } =
+    useContext(Context).state;
+  const show = device !== "TOUCH" && loaded && !isEnded && showEffect;
+  return show ? (
     <div className="play-effect-container">
-      {isPlay && (
+      {isEffectPlay && (
         <div className="play-effect-wrapper">
           <div className="play-icon"></div>
         </div>
       )}
-      {!isPlay && (
+      {!isEffectPlay && (
         <div className="play-effect-wrapper">
           <div className="pause-icon">
             <div></div>
@@ -20,6 +22,8 @@ function PlayEffect({ isPlay }: Props) {
         </div>
       )}
     </div>
+  ) : (
+    <></>
   );
 }
 

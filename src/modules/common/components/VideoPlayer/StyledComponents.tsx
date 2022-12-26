@@ -12,7 +12,6 @@ const VideoContainer = styled.div`
     outline: none;
     border: none;
     cursor: pointer;
-    padding: 0;
     border-radius: 0;
   }
 `;
@@ -50,7 +49,7 @@ const BtnExitFull = styled.button`
   background: none;
   border: none;
   outline: none;
-  padding: 0.25em 1em 0.25em 0.25em !important;
+  padding: 0.25em 1em 0.25em 0.25em;
   cursor: pointer;
 `;
 const TextWrapper = styled.div`

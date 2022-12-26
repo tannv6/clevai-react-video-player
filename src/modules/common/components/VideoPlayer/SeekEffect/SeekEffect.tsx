@@ -1,20 +1,23 @@
+import { useContext } from "react";
+import { Context } from "../../../utils/hooks";
 import "./seekEffect.scss";
 type Props = {
   time: number;
   timeUnit: "MINUTE" | "SECOND";
-  className: string;
-  type: "BACKWARD" | "FORWARD";
 };
-function SeekEffect({ time, timeUnit, className, type }: Props) {
-  return (
+function SeekEffect({ time, timeUnit }: Props) {
+  const {
+    state: { seekEffect },
+  } = useContext(Context);
+  return seekEffect.show ? (
     <div
-      className={`seek-effect-container ${className}  ${
-        type === "BACKWARD" ? "seek-effect-container-backward" : ""
+      className={`seek-effect-container  ${
+        seekEffect.type === "BACKWARD" ? "seek-effect-container-backward" : ""
       }`}
     >
       <div
         className={`seek-effect-wrapper ${
-          type === "BACKWARD" ? "seek-effect-wrapper-backward" : ""
+          seekEffect.type === "BACKWARD" ? "seek-effect-wrapper-backward" : ""
         }`}
       >
         <span className="seek-triangle"></span>
@@ -25,6 +28,8 @@ function SeekEffect({ time, timeUnit, className, type }: Props) {
         {time} {timeUnit === "MINUTE" ? "phút" : "giây"}
       </div>
     </div>
+  ) : (
+    <></>
   );
 }
 

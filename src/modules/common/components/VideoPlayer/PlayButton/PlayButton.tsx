@@ -1,10 +1,13 @@
+import { Context } from "../../../utils/hooks";
+import { useContext } from "react";
 import "./playButton.scss";
 type Props = {
-  isPlay: boolean;
   onClick: any;
 };
-function PlayButton({ isPlay, onClick }: Props) {
-  return (
+function PlayButton({ onClick }: Props) {
+  const { controlsShow, isPlay, loaded, device } = useContext(Context).state;
+  const show = device === "TOUCH" && loaded && (controlsShow || !isPlay);
+  return show ? (
     <div className="play-button-container" onClick={onClick}>
       {isPlay ? (
         <div className="pause-button">
@@ -15,6 +18,8 @@ function PlayButton({ isPlay, onClick }: Props) {
         <div className="play-button"></div>
       )}
     </div>
+  ) : (
+    <></>
   );
 }
 
