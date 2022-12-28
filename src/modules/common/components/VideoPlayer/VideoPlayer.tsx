@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/no-redundant-roles */
-import { useState, memo, useEffect, useReducer } from "react";
+import { useState, memo, useEffect, useReducer, Fragment } from "react";
 import { Context, initState, reducer, useInitEffect } from "../../utils/hooks";
 import Controls from "./Controls";
 import Setting from "./Setting";
@@ -52,17 +52,17 @@ const Render = (props: RenderProps) => {
     handleClickSetting,
   ] = useInitEffect(customRef, state, dispatch);
   const { containerWidth, isError, device } = state;
-  const isTouchAble = device === "TOUCH";
-  const wrapperClassName = `video-wrapper ${
-    isTouchAble ? "video-wrapper-is-mobile" : ""
-  } ${
-    containerWidth < 400 && !isTouchAble ? "video-wrapper-need-zoom-2" : ""
-  } ${
-    (containerWidth < 500 && !isTouchAble) ||
-    (containerWidth < 340 && isTouchAble)
-      ? "video-wrapper-need-zoom-1"
-      : ""
-  }`;
+  // const isTouchAble = device === "TOUCH";
+  // const wrapperClassName = `video-wrapper ${
+  //   isTouchAble ? "video-wrapper-is-mobile" : ""
+  // } ${
+  //   containerWidth < 400 && !isTouchAble ? "video-wrapper-need-zoom-2" : ""
+  // } ${
+  //   (containerWidth < 500 && !isTouchAble) ||
+  //   (containerWidth < 340 && isTouchAble)
+  //     ? "video-wrapper-need-zoom-1"
+  //     : ""
+  // }`;
   return (
     <Context.Provider value={{ state, dispatch }}>
       <VideoContainer ref={containerRef}>
@@ -72,7 +72,7 @@ const Render = (props: RenderProps) => {
           onMouseLeave={handleMouseLeave}
         >
           {!isError && (
-            <>
+            <Fragment>
               <VideoEffect
                 title={title}
                 handleFullScreen={handleFullScreen}
@@ -101,17 +101,9 @@ const Render = (props: RenderProps) => {
                 handleClickSetting={handleClickSetting}
               />
               <Setting videoRef={videoRef} />
-            </>
+            </Fragment>
           )}
         </VideoWrapper>
-        {/* <div
-          className={wrapperClassName}
-          ref={wrapperRef}
-          onMouseMove={handleMouseMove}
-          onMouseLeave={handleMouseLeave}
-        >
-          
-        </div> */}
       </VideoContainer>
     </Context.Provider>
   );
